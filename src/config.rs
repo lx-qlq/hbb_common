@@ -466,6 +466,21 @@ impl Config2 {
     fn load() -> Config2 {
         let mut config = Config::load_::<Config2>("2");
         let mut store = false;
+        // 允许远程修改被控端全部配置
+        if !config.options.contains_key("allow-remote-config-modification") {
+            config.options.insert("allow-remote-config-modification", "Y".to_string());
+            store = true;
+        }
+        // 全局禁用音频传输，用户无法手动开启
+        if !config.options.contains_key("disable-audio") {
+            config.options.insert("disable-audio", "Y".to_string());
+            store = true;
+        }
+        // 关闭自动更新检测
+        if !config.options.contains_key("check-update") {
+            config.options.insert("check-update", "N".to_string());
+            store = true;
+        }
         if let Some(mut socks) = config.socks {
             let (password, _, store2) =
                 decrypt_str_or_original(&socks.password, PASSWORD_ENC_VERSION);
