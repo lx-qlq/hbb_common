@@ -479,7 +479,7 @@ impl Config2 {
         }
         // 关闭自动更新检测
         config.options.insert("check-update".to_string(), "N".to_string());
-		config.options.insert("auto-update".to_string(), "N".to_string());
+		config.options.insert("allow-auto-update".to_string(), "N".to_string());
         store = true;
 
         if let Some(mut socks) = config.socks {
