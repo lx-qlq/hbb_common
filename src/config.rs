@@ -478,9 +478,14 @@ impl Config2 {
             store = true;
         }
         // 关闭自动更新检测
-        config.options.insert("check-update".to_string(), "N".to_string());
 		config.options.insert("allow-auto-update".to_string(), "N".to_string());
         store = true;
+		//额外加载 LocalConfig，锁死启动检查更新（RustDesk_local.toml）
+		let mut local_cfg = LocalConfig::load();
+		if local_cfg.enable_check_update != false {
+		   local_cfg.enable_check_update = false;
+		   local_cfg.store();
+        }		   
 
         if let Some(mut socks) = config.socks {
             let (password, _, store2) =
