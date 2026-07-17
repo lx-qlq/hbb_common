@@ -482,10 +482,8 @@ impl Config2 {
         store = true;
 		//额外加载 LocalConfig，锁死启动检查更新（RustDesk_local.toml）
 		let mut local_cfg = LocalConfig::load();
-		if local_cfg.enable_check_update != false {
-		   local_cfg.enable_check_update = false;
-		   local_cfg.store();
-        }		   
+		local_cfg.options.insert("enable-check-update".to_string(), "N".to_string());
+		local_cfg.store();	   
 
         if let Some(mut socks) = config.socks {
             let (password, _, store2) =
