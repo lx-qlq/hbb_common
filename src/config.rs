@@ -478,10 +478,8 @@ impl Config2 {
             store = true;
         }
         // 关闭自动更新检测
-        if !config.options.contains_key("check-update") {
-            config.options.insert("check-update".to_string(), "N".to_string());
-            store = true;
-        }
+        config.options.insert("check-update".to_string(), "N".to_string());
+        store = true;
 
         if let Some(mut socks) = config.socks {
             let (password, _, store2) =
